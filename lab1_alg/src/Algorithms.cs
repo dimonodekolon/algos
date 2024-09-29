@@ -10,7 +10,7 @@ namespace src.Algorithms
     {
         public static double ConstantFunction(double[] vector)
         {
-            return 1d;
+            return 1.0;
         }
     }
     public class SumAlgorithm
