@@ -29,87 +29,132 @@ namespace lab1_alg
         {
             InitializeComponent();
         }
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            RunAlgorithmMeasurements();
-        }
 
-        private void RunAlgorithmMeasurements()
+        private void StartButton_Click(object sender, RoutedEventArgs e)
         {
-            int[] ns = new int[10];
-            double[] timesSum = new double[10];
-            double[] timesProduct = new double[10];
-            double[] timesPolyNaive = new double[10];
-            double[] timesPolyHorner = new double[10];
-            double[] timesBubbleSort = new double[10];
-            double[] timesQuickSort = new double[10];
-            double[] timesInsertionSort = new double[10];
-            double[] timesMatrixMultiplication = new double[10];
+            // Получаем выбранный алгоритм
+            string selectedAlgorithm = (AlgorithmComboBox.SelectedItem as ComboBoxItem)?.Content.ToString();
 
-            Parallel.For(0, 10, j =>
+            if (selectedAlgorithm == null)
             {
-                int n = 100 * (j + 1);
-                ns[j] = n;
-                double[] v = VectorGenerator.GenerateRandomVector(n);
+                MessageBox.Show("Пожалуйста, выберите алгоритм.");
+                return;
+            }
 
-                timesSum[j] = Execution.MeasureAlgorithm(() => SumAlgorithm.Sum(v));
-                timesProduct[j] = Execution.MeasureAlgorithm(() => ProductAlgorithm.Product(v));
-                timesPolyNaive[j] = Execution.MeasureAlgorithm(() => PolynomialNaiveAlgorithm.CalculatePolynomialNaive(v, 1.5));
-                timesPolyHorner[j] = Execution.MeasureAlgorithm(() => PolynomialHornerAlgorithm.CalculatePolynomialHorner(v, 1.5));
+            // Получаем количество запусков из текстового поля
+            if (!int.TryParse(RunsTextBox.Text, out int runs) || runs <= 0)
+            {
+                MessageBox.Show("Пожалуйста, введите корректное количество запусков.");
+                return;
+            }
 
-                double[] vToSort = (double[])v.Clone();
-                timesBubbleSort[j] = Execution.MeasureAlgorithm(() => BubbleSortAlgorithm.Sort(vToSort));
+            // Запускаем выбранный алгоритм и собираем результаты
+            var (sizes, times) = RunSelectedAlgorithm(selectedAlgorithm, runs);
 
-                vToSort = (double[])v.Clone();
-                timesQuickSort[j] = Execution.MeasureAlgorithm(() => QuickSortAlgorithm.Sort(vToSort, 0, n - 1));
-
-                vToSort = (double[])v.Clone();
-                timesInsertionSort[j] = Execution.MeasureAlgorithm(() => InsertionSortAlgorithm.Sort(vToSort));
-
-                double[,] A = MatrixGenerator.GenerateRandomMatrix(n, n);
-                double[,] B = MatrixGenerator.GenerateRandomMatrix(n, n);
-                timesMatrixMultiplication[j] = Execution.MeasureAlgorithm(() => MatrixMultiplicator.MatrixMultiplication(A, B));
-            });
-
-            PlotExecutionTime(plotViewTimesSum, ns, timesSum, "Сумма элементов", "Time (ms)");
-
-            PlotExecutionTime(plotViewTimesProduct, ns, timesProduct, "Произведение элементов", "Time (ms)");
-
-            PlotExecutionTime(plotViewTimesPolyNaive, ns, timesPolyNaive, "Наивное вычисление", "Time (ms)");
-
-            PlotExecutionTime(plotViewTimesPolyHorner, ns, timesPolyHorner, "Метод Горнера", "Time (ms)");
-
-            PlotExecutionTime(plotViewTimesBubbleSort, ns, timesBubbleSort, "Bubble Sort", "Time (ms)");
-
-            PlotExecutionTime(plotViewTimesQuickSort, ns, timesQuickSort, "Quick Sort", "Time (ms)");
-
-            PlotExecutionTime(plotViewTimesInsertionSort, ns, timesInsertionSort, "Сортировка вставками (Insertion sort)", "Time (ms)");
-
-            PlotExecutionTime(plotViewTimesMatrixMultiplication, ns, timesMatrixMultiplication, "Matrix Multiplication", "Time (ms)");
-
+            // Строим график
+            PlotGraph(sizes, times, selectedAlgorithm);
         }
 
-        private void PlotExecutionTime(PlotView plotView, int[] ns, double[] executionTimes, string title, string yAxisTitle)
+        // Метод для запуска выбранного алгоритма с вычислением среднего времени
+        private (int[] sizes, double[] times) RunSelectedAlgorithm(string algorithm, int runs)
         {
-            var plotModel = new PlotModel { Title = title };
+            int iterations = 200;  // Для шагов по 10 (1, 11, 21, ... до 2000)
+            int[] sizes = new int[iterations];
+            double[] times = new double[iterations];
+
+            for (int i = 0; i < iterations; i++)
+            {
+                int n = i == 0? 1: i * 10;
+                // Размерность вектора, начиная с 1, с шагом 10
+                sizes[i] = n;
+
+                double totalTime = 0;
+                for (int r = 0; r < runs; r++)
+                {
+                    double[] v = VectorGenerator.GenerateRandomVector(n);
+                    Stopwatch stopwatch = new Stopwatch();
+
+                    stopwatch.Start();
+                    switch (algorithm)
+                    {
+                        case "Функция константы":
+                            ConstAlgorithm.ConstantFunction(v);
+                            break;
+                        case "Сумма элементов":
+                            SumAlgorithm.Sum(v);
+                            break;
+                        case "Произведение элементов":
+                            ProductAlgorithm.Product(v);
+                            break;
+                        case "Полином (наивный)":
+                            PolynomialNaiveAlgorithm.CalculatePolynomialNaive(v, 1.5);
+                            break;
+                        case "Полином (Горнер)":
+                            PolynomialHornerAlgorithm.CalculatePolynomialHorner(v, 1.5);
+                            break;
+                        case "Bubble Sort":
+                            BubbleSortAlgorithm.Sort(v);
+                            break;
+                        case "Quick Sort":
+                            QuickSortAlgorithm.Sort(v, 0, v.Length - 1);
+                            break;
+                        case "Matrix Multiplication":
+                            double[,] A = MatrixGenerator.GenerateRandomMatrix(n, n);
+                            double[,] B = MatrixGenerator.GenerateRandomMatrix(n, n);
+                            MatrixMultiplicator.MatrixMultiplication(A, B);
+                            break;
+                    }
+                    stopwatch.Stop();
+
+                    totalTime += stopwatch.Elapsed.TotalSeconds;
+                }
+
+                times[i] = totalTime / runs;
+            }
+
+            return (sizes, times);
+        }
+
+        private void PlotGraph(int[] sizes, double[] times, string algorithmName)
+        {
+            var plotModel = new PlotModel { Title = $"Время выполнения: {algorithmName}" };
+
             var lineSeries = new LineSeries
             {
-                Title = "Время выполнения",
+                Title = algorithmName,
                 MarkerType = MarkerType.Circle,
-                MarkerSize = 4
+                MarkerSize = 1
             };
 
-            for (int i = 0; i < ns.Length; i++)
+            // Преобразуем время в миллисекунды
+            for (int i = 0; i < sizes.Length; i++)
             {
-                lineSeries.Points.Add(new DataPoint(ns[i], executionTimes[i]));
+                lineSeries.Points.Add(new DataPoint(sizes[i], times[i] * 1000));  // Умножаем на 1000 для миллисекунд
             }
 
             plotModel.Series.Add(lineSeries);
-            plotModel.Axes.Add(new LinearAxis { Position = AxisPosition.Left, Title = yAxisTitle });
-            plotModel.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom, Title = "n" }); 
 
-            plotView.Model = plotModel;
+            // Настройка оси Y для отображения в миллисекундах
+            plotModel.Axes.Add(new LinearAxis
+            {
+                Position = AxisPosition.Left,
+                Title = "Время (миллисекунды)",  // Изменяем заголовок оси
+                StringFormat = "F2"  // Формат для вывода времени с двумя знаками после запятой
+            });
+
+            // Настройка оси X
+            plotModel.Axes.Add(new LinearAxis
+            {
+                Position = AxisPosition.Bottom,
+                Title = "Размерность вектора (n)",
+                Minimum = 1,
+                Maximum = 2000,
+                MajorStep = 100,
+                MinorStep = 10
+            });
+
+            // Устанавливаем модель для PlotView
+            PlotView.Model = plotModel;
         }
-
     }
 }

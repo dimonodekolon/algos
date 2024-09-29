@@ -6,6 +6,13 @@ using System.Threading.Tasks;
 
 namespace src.Algorithms
 {
+    public class ConstAlgorithm
+    {
+        public static double ConstantFunction(double[] vector)
+        {
+            return 1d;
+        }
+    }
     public class SumAlgorithm
     {
         public static double Sum(double[] vector)
