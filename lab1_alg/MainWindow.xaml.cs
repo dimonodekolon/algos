@@ -58,13 +58,14 @@ namespace lab1_alg
         // Метод для запуска выбранного алгоритма с вычислением среднего времени
         private (int[] sizes, double[] times) RunSelectedAlgorithm(string algorithm, int runs)
         {
-            int iterations = 200;  // Для шагов по 10 (1, 11, 21, ... до 2000)
+            int iterations = algorithm == "Matrix Multiplication" ? 30 : 200; ;  // Для шагов по 10 (1, 11, 21, ... до 2000)
+
             int[] sizes = new int[iterations];
             double[] times = new double[iterations];
 
             for (int i = 0; i < iterations; i++)
             {
-                int n = i == 0? 1: i * 10;
+                int n = i == 0 ? 1 : i * 10;
                 // Размерность вектора, начиная с 1, с шагом 10
                 sizes[i] = n;
 
@@ -126,7 +127,7 @@ namespace lab1_alg
                 MarkerSize = 1
             };
 
-            // Преобразуем время в миллисекунды
+            // Преобразуем время в миллисекунды и заполняем серию
             for (int i = 0; i < sizes.Length; i++)
             {
                 lineSeries.Points.Add(new DataPoint(sizes[i], times[i] * 1000));  // Умножаем на 1000 для миллисекунд
@@ -134,13 +135,9 @@ namespace lab1_alg
 
             plotModel.Series.Add(lineSeries);
 
-            // Настройка оси Y для отображения в миллисекундах
-            plotModel.Axes.Add(new LinearAxis
-            {
-                Position = AxisPosition.Left,
-                Title = "Время (миллисекунды)",  // Изменяем заголовок оси
-                StringFormat = "F2"  // Формат для вывода времени с двумя знаками после запятой
-            });
+            // Вычисляем максимальные значения для осей
+            double maxTime = times.Max() * 1000; // Максимальное время в миллисекундах
+            int maxSize = sizes.Max(); // Максимальный размер вектора
 
             // Настройка оси X
             plotModel.Axes.Add(new LinearAxis
@@ -148,7 +145,7 @@ namespace lab1_alg
                 Position = AxisPosition.Bottom,
                 Title = "Размерность вектора (n)",
                 Minimum = 1,
-                Maximum = 2000,
+                Maximum = maxSize + 10, // Увеличиваем максимальное значение для удобства отображения
                 MajorStep = 100,
                 MinorStep = 10
             });
