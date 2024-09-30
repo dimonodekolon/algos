@@ -70,6 +70,8 @@
     </ApplicationDefinition>
     <Compile Include="MatrixOperations\MatrixMultiplicator.cs" />
     <Compile Include="src\Algorithms.cs" />
+    <Compile Include="src\ShellSortAlgorithm.cs" />
+    <Compile Include="src\Timsort.cs" />
     <Compile Include="Utilities\Execution.cs" />
     <Compile Include="Utilities\MatrixGenerator.cs" />
     <Compile Include="Utilities\VectorGenerator.cs" />

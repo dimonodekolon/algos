@@ -20,6 +20,7 @@ using OxyPlot.Wpf;
 using lab1_alg.Utilities;
 using src.Algorithms;
 using lab1_alg.MatrixOperations;
+using lab1_alg.src;
 
 namespace lab1_alg
 {
@@ -97,6 +98,12 @@ namespace lab1_alg
                             break;
                         case "Quick Sort":
                             QuickSortAlgorithm.Sort(v, 0, v.Length - 1);
+                            break;
+                        case "Insertion Sort":
+                            InsertionSortAlgorithm.Sort(v, 0, v.Length - 1);
+                            break;
+                        case "TimSort":
+                            Timsort.Sort(v);
                             break;
                         case "Matrix Multiplication":
                             double[,] A = MatrixGenerator.GenerateRandomMatrix(n, n);
