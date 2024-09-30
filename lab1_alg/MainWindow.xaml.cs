@@ -103,7 +103,10 @@ namespace lab1_alg
                             InsertionSortAlgorithm.Sort(v, 0, v.Length - 1);
                             break;
                         case "TimSort":
-                            Timsort.Sort(v);
+                            TimSort.Sort(v);
+                            break;
+                        case "ShellSort":
+                            ShellSort.Sort(v);
                             break;
                         case "Matrix Multiplication":
                             double[,] A = MatrixGenerator.GenerateRandomMatrix(n, n);
