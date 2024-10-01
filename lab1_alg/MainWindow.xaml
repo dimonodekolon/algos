@@ -15,6 +15,7 @@
             <ComboBoxItem Content="TimSort" />
             <ComboBoxItem Content="Insertion Sort" />
             <ComboBoxItem Content="ShellSort" />
+            <ComboBoxItem Content="Coctail Sort" />
             <ComboBoxItem Content="Matrix Multiplication" />
             <ComboBoxItem Content="Простое возведение в степень" />
             <ComboBoxItem Content="Рекурсивное возведение в степень" />

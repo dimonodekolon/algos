@@ -143,7 +143,7 @@ namespace src.Algorithms
         public static int RecPow(int x, int n)
         {
             if (n == 0) return 1; // любое число в нулевой степени равно 1
-            int half = RecPow(x, n / 2);
+            int half = RecPow(x, n / 2); // вычисляем половину степени
             if (n % 2 == 0)
             {
                 return half * half; // если степень четная
@@ -156,45 +156,46 @@ namespace src.Algorithms
     }
     public class QuickDegree
     {
-        public static void QuickPow(int x, int n)
+        // Быстрое возведение в степень
+        public static int QuickPow(int x, int n)
         {
-            for (int i = 1; i <= n; i++)
+            int result = 1;
+            int c = x;
+            int k = n;
+
+            while (k > 0)
             {
-                int c = x;
-                int k = n;
-                int f;
-                if (k % 2 == 1) f = c;
-                else f = 1;
-                while (k != 0)
+                if (k % 2 == 1)
                 {
-                    k = k / 2;
-                    c = c * c;
-                    if ((k % 2) == 1) f = f * c;
-                    else { continue; }
+                    result *= c;
                 }
+                c *= c;
+                k /= 2;
             }
+            return result;
         }
-        public static void QuickPow2(int x, int n)
+
+        // Классический быстрый алгоритм
+        public static int QuickPow2(int x, int n)
         {
-            for (int i = 1; i <= n; i++)
+            int result = 1;
+            int c = x;
+            int k = n;
+
+            while (k > 0)
             {
-                int c = x;
-                int k = n;
-                int f = 1;
-                while (k != 0)
+                if (k % 2 != 0)
                 {
-                    if (k % 2 == 0)
-                    {
-                        c = c * c;
-                        k = k / 2;
-                    }
-                    else
-                    {
-                        f = f * c;
-                        k = k - 1;
-                    }
+                    result *= c;
+                    k--;
+                }
+                else
+                {
+                    c *= c;
+                    k /= 2;
                 }
             }
+            return result;
         }
     }
 }

@@ -91,7 +91,6 @@
     <Compile Include="src\CoctailSort.cs" />
     <Compile Include="src\ShellSort.cs" />
     <Compile Include="src\TimSort.cs" />
-    <Compile Include="Utilities\Execution.cs" />
     <Compile Include="Utilities\MatrixGenerator.cs" />
     <Compile Include="Utilities\VectorGenerator.cs" />
     <Page Include="MainWindow.xaml">
