@@ -85,6 +85,8 @@ namespace lab1_alg
                 int n = i == 0 ? 1 : (i - 1) * step + step;
                 sizes[i] = n;  // Размерность вектора
                 double totalTime = 0;
+                int number = 5;
+                int degree = i == 0 ? 1 : i * 10;
 
                 for (int r = 0; r < runs; r++)
                 {
@@ -130,6 +132,9 @@ namespace lab1_alg
                             case "Insertion Sort":
                                 InsertionSortAlgorithm.Sort(v, 0, v.Length - 1);
                                 break;
+                            case "Coctail Sort":
+                                CoctailSort.ShakerSort(v);
+                                break;
                             case "TimSort":
                                 TimSort.Sort(v);
                                 break;
@@ -138,6 +143,18 @@ namespace lab1_alg
                                 break;
                             case "Matrix Multiplication":
                                 MatrixMultiplicator.MatrixMultiplication(A, B);
+                                break;
+                            case "Простое возведение в степень":
+                                SimpleDegree.Pow(number, degree);
+                                break;
+                            case "Рекурсивное возведение в степень":
+                                RecDegree.RecPow(number, degree);
+                                break;
+                            case "Быстрое возведение в степень":
+                                QuickDegree.QuickPow(number, degree);
+                                break;
+                            case "Быстрое возведение в степень 2":
+                                QuickDegree.QuickPow2(number, degree);
                                 break;
                         }
                         stopwatch.Stop();
@@ -216,17 +233,6 @@ namespace lab1_alg
                 Maximum = times.Max() * 1.1
             });
 
-            plotModel.Axes.Add(new LinearAxis
-            {
-                Position = AxisPosition.Bottom,
-                Title = "Размерность вектора (n)",
-                Minimum = sizes.Min(),
-                Maximum = sizes.Max()
-            });
-
-            // Добавляем легенду
-            plotModel.IsLegendVisible = true;
-
             // Настройка оси X
             if (algorithmName.Contains("степень"))
             {
@@ -234,10 +240,8 @@ namespace lab1_alg
                 {
                     Position = AxisPosition.Bottom,
                     Title = "Значение степени",
-                    Minimum = 1,
-                    Maximum = 2000,
-                    MajorStep = 100,
-                    MinorStep = 10
+                    Minimum = sizes.Min(),
+                    Maximum = sizes.Max()
                 });
             }
             else
@@ -246,12 +250,13 @@ namespace lab1_alg
                 {
                     Position = AxisPosition.Bottom,
                     Title = "Размерность вектора (n)",
-                    Minimum = 1,
-                    Maximum = 2000,
-                    MajorStep = 100,
-                    MinorStep = 10
+                    Minimum = sizes.Min(),
+                    Maximum = sizes.Max()
                 });
             }
+
+            // Добавляем легенду
+            plotModel.IsLegendVisible = true;
             // Устанавливаем модель для PlotView
             PlotView.Model = plotModel;
         }

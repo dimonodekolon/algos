@@ -88,6 +88,7 @@
     </ApplicationDefinition>
     <Compile Include="MatrixOperations\MatrixMultiplicator.cs" />
     <Compile Include="src\Algorithms.cs" />
+    <Compile Include="src\CoctailSort.cs" />
     <Compile Include="src\ShellSort.cs" />
     <Compile Include="src\TimSort.cs" />
     <Compile Include="Utilities\Execution.cs" />
