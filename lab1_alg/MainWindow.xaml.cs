@@ -61,22 +61,33 @@ namespace lab1_alg
             int iterations = 200;  // Для шагов по 10 (1, 11, 21, ... до 2000)
             int[] sizes = new int[iterations];
             double[] times = new double[iterations];
-
             for (int i = 0; i < iterations; i++)
             {
-                int n = i == 0? 1: i * 10;
+                int number = 5; // Фиксированное число (база) для алгоритмов степени
+                int n = i == 0 ? 1 : i * 10;
                 // Размерность вектора, начиная с 1, с шагом 10
+                int degree = i == 0 ? 1 : i * 10; // Степень для числа
                 sizes[i] = n;
-
                 double totalTime = 0;
                 for (int r = 0; r < runs; r++)
                 {
                     double[] v = VectorGenerator.GenerateRandomVector(n);
                     Stopwatch stopwatch = new Stopwatch();
-
                     stopwatch.Start();
                     switch (algorithm)
                     {
+                        case "Простое возведение в степень":
+                            SimpleDegree.Pow(number, degree);
+                            break;
+                        case "Рекурсивное возведение в степень":
+                            RecDegree.RecPow(number, degree);
+                            break;
+                        case "Быстрое возведение в степень":
+                            QuickDegree.QuickPow(number, degree);
+                            break;
+                        case "Быстрое возведение в степень 2":
+                            QuickDegree.QuickPow2(number, degree);
+                            break;
                         case "Функция константы":
                             ConstAlgorithm.ConstantFunction(v);
                             break;
@@ -108,7 +119,6 @@ namespace lab1_alg
 
                     totalTime += stopwatch.Elapsed.TotalSeconds;
                 }
-
                 times[i] = totalTime / runs;
             }
 
@@ -141,18 +151,31 @@ namespace lab1_alg
                 Title = "Время (миллисекунды)",  // Изменяем заголовок оси
                 StringFormat = "F2"  // Формат для вывода времени с двумя знаками после запятой
             });
-
             // Настройка оси X
-            plotModel.Axes.Add(new LinearAxis
+            if (algorithmName.Contains("степень"))
             {
-                Position = AxisPosition.Bottom,
-                Title = "Размерность вектора (n)",
-                Minimum = 1,
-                Maximum = 2000,
-                MajorStep = 100,
-                MinorStep = 10
-            });
-
+                plotModel.Axes.Add(new LinearAxis
+                {
+                    Position = AxisPosition.Bottom,
+                    Title = "Значение степени",
+                    Minimum = 1,
+                    Maximum = 2000,
+                    MajorStep = 100,
+                    MinorStep = 10
+                });
+            }
+            else
+            {
+                plotModel.Axes.Add(new LinearAxis
+                {
+                    Position = AxisPosition.Bottom,
+                    Title = "Размерность вектора (n)",
+                    Minimum = 1,
+                    Maximum = 2000,
+                    MajorStep = 100,
+                    MinorStep = 10
+                });
+            }
             // Устанавливаем модель для PlotView
             PlotView.Model = plotModel;
         }
