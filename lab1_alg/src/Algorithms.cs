@@ -111,19 +111,18 @@ namespace src.Algorithms
 
     public class InsertionSortAlgorithm
     {
-        public static void Sort(double[] array)
+        public static void Sort(double[] arr, int left, int right)
         {
-            int n = array.Length;
-            for (int i = 1; i < n; i++)
+            for (int i = left + 1; i <= right; i++)
             {
-                double key = array[i];
+                double temp = arr[i];
                 int j = i - 1;
-                while (j >= 0 && array[j] > key)
+                while (j >= left && arr[j] > temp)
                 {
-                    array[j + 1] = array[j];
+                    arr[j + 1] = arr[j];
                     j--;
                 }
-                array[j + 1] = key;
+                arr[j + 1] = temp;
             }
         }
     }

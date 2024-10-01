@@ -1,14 +1,26 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\admin\\Desktop\\lab1_alg\\",
+  "WorkspaceRootPath": "C:\\Users\\danil\\algosDIMASIK\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{0BA59F3E-1EC5-4CA1-8FBE-A7645330E054}|lab1_alg\\lab1_alg.csproj|C:\\Users\\admin\\Desktop\\lab1_alg\\lab1_alg\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0BA59F3E-1EC5-4CA1-8FBE-A7645330E054}|lab1_alg\\lab1_alg.csproj|solutionrelative:lab1_alg\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{0BA59F3E-1EC5-4CA1-8FBE-A7645330E054}|lab1_alg\\lab1_alg.csproj|C:\\Users\\danil\\algosDIMASIK\\lab1_alg\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{0BA59F3E-1EC5-4CA1-8FBE-A7645330E054}|lab1_alg\\lab1_alg.csproj|solutionrelative:lab1_alg\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0BA59F3E-1EC5-4CA1-8FBE-A7645330E054}|lab1_alg\\lab1_alg.csproj|c:\\users\\admin\\desktop\\lab1_alg\\lab1_alg\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{0BA59F3E-1EC5-4CA1-8FBE-A7645330E054}|lab1_alg\\lab1_alg.csproj|solutionrelative:lab1_alg\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{0BA59F3E-1EC5-4CA1-8FBE-A7645330E054}|lab1_alg\\lab1_alg.csproj|C:\\Users\\danil\\algosDIMASIK\\lab1_alg\\src\\algorithms.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0BA59F3E-1EC5-4CA1-8FBE-A7645330E054}|lab1_alg\\lab1_alg.csproj|solutionrelative:lab1_alg\\src\\algorithms.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0BA59F3E-1EC5-4CA1-8FBE-A7645330E054}|lab1_alg\\lab1_alg.csproj|C:\\Users\\danil\\algosDIMASIK\\lab1_alg\\src\\timsort.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0BA59F3E-1EC5-4CA1-8FBE-A7645330E054}|lab1_alg\\lab1_alg.csproj|solutionrelative:lab1_alg\\src\\timsort.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0BA59F3E-1EC5-4CA1-8FBE-A7645330E054}|lab1_alg\\lab1_alg.csproj|C:\\Users\\danil\\algosDIMASIK\\lab1_alg\\src\\shellsort.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0BA59F3E-1EC5-4CA1-8FBE-A7645330E054}|lab1_alg\\lab1_alg.csproj|solutionrelative:lab1_alg\\src\\shellsort.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0BA59F3E-1EC5-4CA1-8FBE-A7645330E054}|lab1_alg\\lab1_alg.csproj|c:\\users\\danil\\algosdimasik\\lab1_alg\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0BA59F3E-1EC5-4CA1-8FBE-A7645330E054}|lab1_alg\\lab1_alg.csproj|solutionrelative:lab1_alg\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,15 +30,55 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "TimSort.cs",
+              "DocumentMoniker": "C:\\Users\\danil\\algosDIMASIK\\lab1_alg\\src\\TimSort.cs",
+              "RelativeDocumentMoniker": "lab1_alg\\src\\TimSort.cs",
+              "ToolTip": "C:\\Users\\danil\\algosDIMASIK\\lab1_alg\\src\\TimSort.cs",
+              "RelativeToolTip": "lab1_alg\\src\\TimSort.cs",
+              "ViewState": "AQIAAFQAAAAAAAAAAAAowAsAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-30T16:27:02.437Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ShellSort.cs",
+              "DocumentMoniker": "C:\\Users\\danil\\algosDIMASIK\\lab1_alg\\src\\ShellSort.cs",
+              "RelativeDocumentMoniker": "lab1_alg\\src\\ShellSort.cs",
+              "ToolTip": "C:\\Users\\danil\\algosDIMASIK\\lab1_alg\\src\\ShellSort.cs",
+              "RelativeToolTip": "lab1_alg\\src\\ShellSort.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-30T19:06:51.621Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "Algorithms.cs",
+              "DocumentMoniker": "C:\\Users\\danil\\algosDIMASIK\\lab1_alg\\src\\Algorithms.cs",
+              "RelativeDocumentMoniker": "lab1_alg\\src\\Algorithms.cs",
+              "ToolTip": "C:\\Users\\danil\\algosDIMASIK\\lab1_alg\\src\\Algorithms.cs",
+              "RelativeToolTip": "lab1_alg\\src\\Algorithms.cs",
+              "ViewState": "AQIAAAsAAAAAAAAAAAAQwC0AAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-30T17:46:11.625Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
               "Title": "MainWindow.xaml",
-              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\lab1_alg\\lab1_alg\\MainWindow.xaml",
+              "DocumentMoniker": "C:\\Users\\danil\\algosDIMASIK\\lab1_alg\\MainWindow.xaml",
               "RelativeDocumentMoniker": "lab1_alg\\MainWindow.xaml",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\lab1_alg\\lab1_alg\\MainWindow.xaml",
+              "ToolTip": "C:\\Users\\danil\\algosDIMASIK\\lab1_alg\\MainWindow.xaml",
               "RelativeToolTip": "lab1_alg\\MainWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
               "WhenOpened": "2024-09-22T05:09:53.36Z",
@@ -34,13 +86,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 4,
               "Title": "MainWindow.xaml.cs",
-              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\lab1_alg\\lab1_alg\\MainWindow.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\danil\\algosDIMASIK\\lab1_alg\\MainWindow.xaml.cs",
               "RelativeDocumentMoniker": "lab1_alg\\MainWindow.xaml.cs",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\lab1_alg\\lab1_alg\\MainWindow.xaml.cs",
+              "ToolTip": "C:\\Users\\danil\\algosDIMASIK\\lab1_alg\\MainWindow.xaml.cs",
               "RelativeToolTip": "lab1_alg\\MainWindow.xaml.cs",
-              "ViewState": "AQIAACYAAAAAAAAAAAAwwFYAAAAIAAAA",
+              "ViewState": "AQIAAA8AAAAAAAAAAAAAABAAAAAgAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-22T05:09:51.544Z",
               "EditorCaption": ""

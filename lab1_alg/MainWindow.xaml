@@ -12,7 +12,9 @@
             <ComboBoxItem Content="Полином (Горнер)" />
             <ComboBoxItem Content="Bubble Sort" />
             <ComboBoxItem Content="Quick Sort" />
-            <ComboBoxItem Content="Coctail Sort" />
+            <ComboBoxItem Content="TimSort" />
+            <ComboBoxItem Content="Insertion Sort" />
+            <ComboBoxItem Content="ShellSort" />
             <ComboBoxItem Content="Matrix Multiplication" />
             <ComboBoxItem Content="Простое возведение в степень" />
             <ComboBoxItem Content="Рекурсивное возведение в степень" />
