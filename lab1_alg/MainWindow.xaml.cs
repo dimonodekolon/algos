@@ -76,6 +76,9 @@ namespace lab1_alg
                     stopwatch.Start();
                     switch (algorithm)
                     {
+                        case "Coctail Sort":
+                            CoctailSort.ShakerSort(v);
+                            break;
                         case "Простое возведение в степень":
                             SimpleDegree.Pow(number, degree);
                             break;
