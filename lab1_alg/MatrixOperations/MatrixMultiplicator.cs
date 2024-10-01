@@ -19,7 +19,7 @@ namespace lab1_alg.MatrixOperations
 
             double[,] result = new double[aRows, bCols];
 
-            for (int i = 0; i < aRows; i++)
+            Parallel.For(0, aRows, i =>
             {
                 for (int k = 0; k < aCols; k++)
                 {
@@ -29,9 +29,10 @@ namespace lab1_alg.MatrixOperations
                         result[i, j] += temp * B[k, j];
                     }
                 }
-            }
+            });
 
             return result;
         }
+
     }
 }

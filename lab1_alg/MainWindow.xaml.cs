@@ -60,8 +60,19 @@ namespace lab1_alg
         // Метод для запуска выбранного алгоритма с вычислением среднего времени
         private (int[] sizes, double[] times) RunSelectedAlgorithm(string algorithm, int runs)
         {
-            int iterations = 100;  // Уменьшаем количество итераций
-            int step = 20;         // Увеличиваем шаг
+            int iterations;
+            int step;
+
+            if (algorithm == "Matrix Multiplication")
+            {
+                iterations = 10; // Уменьшаем количество итераций
+                step = 50;       // Увеличиваем шаг для получения приемлемых размеров
+            }
+            else
+            {
+                iterations = 100;
+                step = 20;
+            }
 
             int[] sizes = new int[iterations];
             double[] times = new double[iterations];
@@ -75,59 +86,74 @@ namespace lab1_alg
 
                 for (int r = 0; r < runs; r++)
                 {
-                    double[] v = VectorGenerator.GenerateRandomVector(n);
-
-                    // Генерация данных вне измерения времени
-                    double[,] A = null;
-                    double[,] B = null;
-                    if (algorithm == "Matrix Multiplication")
+                    try
                     {
-                        A = MatrixGenerator.GenerateRandomMatrix(n, n);
-                        B = MatrixGenerator.GenerateRandomMatrix(n, n);
+                        double[] v = VectorGenerator.GenerateRandomVector(n);
+
+                        // Генерация данных вне измерения времени
+                        double[,] A = null;
+                        double[,] B = null;
+                        if (algorithm == "Matrix Multiplication")
+                        {
+                            A = MatrixGenerator.GenerateRandomMatrix(n, n);
+                            B = MatrixGenerator.GenerateRandomMatrix(n, n);
+                        }
+
+                        Stopwatch stopwatch = new Stopwatch();
+
+                        stopwatch.Start();
+                        switch (algorithm)
+                        {
+                            case "Функция константы":
+                                ConstAlgorithm.ConstantFunction(v);
+                                break;
+                            case "Сумма элементов":
+                                SumAlgorithm.Sum(v);
+                                break;
+                            case "Произведение элементов":
+                                ProductAlgorithm.Product(v);
+                                break;
+                            case "Полином (наивный)":
+                                PolynomialNaiveAlgorithm.CalculatePolynomialNaive(v, 1.5);
+                                break;
+                            case "Полином (Горнер)":
+                                PolynomialHornerAlgorithm.CalculatePolynomialHorner(v, 1.5);
+                                break;
+                            case "Bubble Sort":
+                                BubbleSortAlgorithm.Sort(v);
+                                break;
+                            case "Quick Sort":
+                                QuickSortAlgorithm.Sort(v, 0, v.Length - 1);
+                                break;
+                            case "Insertion Sort":
+                                InsertionSortAlgorithm.Sort(v, 0, v.Length - 1);
+                                break;
+                            case "TimSort":
+                                TimSort.Sort(v);
+                                break;
+                            case "ShellSort":
+                                ShellSort.Sort(v);
+                                break;
+                            case "Matrix Multiplication":
+                                MatrixMultiplicator.MatrixMultiplication(A, B);
+                                break;
+                        }
+                        stopwatch.Stop();
+                        totalTime += stopwatch.Elapsed.TotalMilliseconds; // В миллисекундах
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Ошибка при выполнении алгоритма: {ex.Message}");
+                        times[i] = double.NaN;
+                        break;
+                    }
+                    if (!double.IsNaN(times[i]))
+                    {
+                        times[i] = totalTime / runs;
                     }
 
-                    Stopwatch stopwatch = new Stopwatch();
+                    Debug.WriteLine($"Завершена итерация {i + 1}/{iterations} для n = {n}");
 
-                    stopwatch.Start();
-                    switch (algorithm)
-                    {
-                        case "Функция константы":
-                            ConstAlgorithm.ConstantFunction(v);
-                            break;
-                        case "Сумма элементов":
-                            SumAlgorithm.Sum(v);
-                            break;
-                        case "Произведение элементов":
-                            ProductAlgorithm.Product(v);
-                            break;
-                        case "Полином (наивный)":
-                            PolynomialNaiveAlgorithm.CalculatePolynomialNaive(v, 1.5);
-                            break;
-                        case "Полином (Горнер)":
-                            PolynomialHornerAlgorithm.CalculatePolynomialHorner(v, 1.5);
-                            break;
-                        case "Bubble Sort":
-                            BubbleSortAlgorithm.Sort(v);
-                            break;
-                        case "Quick Sort":
-                            QuickSortAlgorithm.Sort(v, 0, v.Length - 1);
-                            break;
-                        case "Insertion Sort":
-                            InsertionSortAlgorithm.Sort(v, 0, v.Length - 1);
-                            break;
-                        case "TimSort":
-                            TimSort.Sort(v);
-                            break;
-                        case "ShellSort":
-                            ShellSort.Sort(v);
-                            break;
-                        case "Matrix Multiplication":
-                            MatrixMultiplicator.MatrixMultiplication(A, B);
-                            break;
-                    }
-                    stopwatch.Stop();
-
-                    totalTime += stopwatch.Elapsed.TotalMilliseconds; // В миллисекундах
                 }
 
                 times[i] = totalTime / runs;
