@@ -60,28 +60,31 @@ namespace lab1_alg
         // Метод для запуска выбранного алгоритма с вычислением среднего времени
         private (int[] sizes, double[] times) RunSelectedAlgorithm(string algorithm, int runs)
         {
+            int desiredMaxN;
             int iterations;
             int step;
 
             if (algorithm == "Matrix Multiplication")
             {
-                iterations = 10; // Уменьшаем количество итераций
-                step = 50;       // Увеличиваем шаг для получения приемлемых размеров
+                desiredMaxN = 500;
+                step = 50;       // Увеличиваем шаг для получения приемлемых размеров // 
+            
             }
             else
             {
-                iterations = 100;
+                desiredMaxN = 2000;
                 step = 20;
             }
+
+            iterations = (desiredMaxN / step) + 1;
 
             int[] sizes = new int[iterations];
             double[] times = new double[iterations];
 
             for (int i = 0; i < iterations; i++)
             {
-                int n = (i + 1) * step;  // Размерность вектора
-
-                sizes[i] = n;
+                int n = i == 0 ? 1 : (i - 1) * step + step;
+                sizes[i] = n;  // Размерность вектора
                 double totalTime = 0;
 
                 for (int r = 0; r < runs; r++)
