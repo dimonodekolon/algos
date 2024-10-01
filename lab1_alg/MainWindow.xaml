@@ -13,10 +13,6 @@
             <ComboBoxItem Content="Bubble Sort" />
             <ComboBoxItem Content="Quick Sort" />
             <ComboBoxItem Content="Matrix Multiplication" />
-            <ComboBoxItem Content="Простое возведение в степень" />
-            <ComboBoxItem Content="Рекурсивное возведение в степень" />
-            <ComboBoxItem Content="Быстрое возведение в степень" />
-            <ComboBoxItem Content="Быстрое возведение в степень 2" />
         </ComboBox>
 
         <Button x:Name="StartButton" Content="Начать расчет" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Margin="220,10,0,0" Click="StartButton_Click"/>
