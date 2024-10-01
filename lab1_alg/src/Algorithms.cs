@@ -127,5 +127,75 @@ namespace src.Algorithms
             }
         }
     }
-
+    public class SimpleDegree
+    {
+        public static int Pow(int x, int n)
+        {
+            int result = 1;
+            for (int i = 0; i < n; i++)
+            {
+                result *= x; // Умножаем x n раз
+            }
+            return result; // Возвращаем результат
+        }
+    }
+    public class RecDegree
+    {
+        public static int RecPow(int x, int n)
+        {
+            if (n == 0) return 1; // любое число в нулевой степени равно 1
+            int half = RecPow(x, n / 2);
+            if (n % 2 == 0)
+            {
+                return half * half; // если степень четная
+            }
+            else
+            {
+                return half * half * x; // если степень нечетная
+            }
+        }
+    }
+    public class QuickDegree
+    {
+        public static void QuickPow(int x, int n)
+        {
+            for (int i = 1; i <= n; i++)
+            {
+                int c = x;
+                int k = n;
+                int f;
+                if (k % 2 == 1) f = c;
+                else f = 1;
+                while (k != 0)
+                {
+                    k = k / 2;
+                    c = c * c;
+                    if ((k % 2) == 1) f = f * c;
+                    else { continue; }
+                }
+            }
+        }
+        public static void QuickPow2(int x, int n)
+        {
+            for (int i = 1; i <= n; i++)
+            {
+                int c = x;
+                int k = n;
+                int f = 1;
+                while (k != 0)
+                {
+                    if (k % 2 == 0)
+                    {
+                        c = c * c;
+                        k = k / 2;
+                    }
+                    else
+                    {
+                        f = f * c;
+                        k = k - 1;
+                    }
+                }
+            }
+        }
+    }
 }
