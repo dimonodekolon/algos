@@ -21,17 +21,18 @@ using lab1_alg.Utilities;
 using src.Algorithms;
 using lab1_alg.MatrixOperations;
 using lab1_alg.src;
+using Accord.Math.Optimization;
 
 namespace lab1_alg
 {
-    public partial class MainWindow : Window
+    public partial class MainWindow : System.Windows.Window
     {
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        private void StartButton_Click(object sender, RoutedEventArgs e)
+        private async void StartButton_Click(object sender, RoutedEventArgs e)
         {
             // Получаем выбранный алгоритм
             string selectedAlgorithm = (AlgorithmComboBox.SelectedItem as ComboBoxItem)?.Content.ToString();
@@ -49,30 +50,42 @@ namespace lab1_alg
                 return;
             }
 
-            // Запускаем выбранный алгоритм и собираем результаты
-            var (sizes, times) = RunSelectedAlgorithm(selectedAlgorithm, runs);
+            // Запускаем выбранный алгоритм асинхронно
+            var (sizes, times) = await Task.Run(() => RunSelectedAlgorithm(selectedAlgorithm, runs));
 
-            // Строим график
+            // Строим график на UI-потоке
             PlotGraph(sizes, times, selectedAlgorithm);
         }
 
         // Метод для запуска выбранного алгоритма с вычислением среднего времени
         private (int[] sizes, double[] times) RunSelectedAlgorithm(string algorithm, int runs)
         {
-            int iterations = 200;  // Для шагов по 10 (1, 11, 21, ... до 2000)
+            int iterations = 100;  // Уменьшаем количество итераций
+            int step = 20;         // Увеличиваем шаг
+
             int[] sizes = new int[iterations];
             double[] times = new double[iterations];
 
             for (int i = 0; i < iterations; i++)
             {
-                int n = i == 0? 1: i * 10;
-                // Размерность вектора, начиная с 1, с шагом 10
-                sizes[i] = n;
+                int n = (i + 1) * step;  // Размерность вектора
 
+                sizes[i] = n;
                 double totalTime = 0;
+
                 for (int r = 0; r < runs; r++)
                 {
                     double[] v = VectorGenerator.GenerateRandomVector(n);
+
+                    // Генерация данных вне измерения времени
+                    double[,] A = null;
+                    double[,] B = null;
+                    if (algorithm == "Matrix Multiplication")
+                    {
+                        A = MatrixGenerator.GenerateRandomMatrix(n, n);
+                        B = MatrixGenerator.GenerateRandomMatrix(n, n);
+                    }
+
                     Stopwatch stopwatch = new Stopwatch();
 
                     stopwatch.Start();
@@ -109,14 +122,12 @@ namespace lab1_alg
                             ShellSort.Sort(v);
                             break;
                         case "Matrix Multiplication":
-                            double[,] A = MatrixGenerator.GenerateRandomMatrix(n, n);
-                            double[,] B = MatrixGenerator.GenerateRandomMatrix(n, n);
                             MatrixMultiplicator.MatrixMultiplication(A, B);
                             break;
                     }
                     stopwatch.Stop();
 
-                    totalTime += stopwatch.Elapsed.TotalSeconds;
+                    totalTime += stopwatch.Elapsed.TotalMilliseconds; // В миллисекундах
                 }
 
                 times[i] = totalTime / runs;
@@ -131,40 +142,142 @@ namespace lab1_alg
 
             var lineSeries = new LineSeries
             {
-                Title = algorithmName,
+                Title = "Экспериментальные данные",
                 MarkerType = MarkerType.Circle,
-                MarkerSize = 1
+                MarkerSize = 1,
+                Color = OxyColors.Blue
             };
 
-            // Преобразуем время в миллисекунды
             for (int i = 0; i < sizes.Length; i++)
             {
-                lineSeries.Points.Add(new DataPoint(sizes[i], times[i] * 1000));  // Умножаем на 1000 для миллисекунд
+                lineSeries.Points.Add(new DataPoint(sizes[i], times[i]));
             }
 
             plotModel.Series.Add(lineSeries);
 
-            // Настройка оси Y для отображения в миллисекундах
+            // Находим наилучшую аппроксимирующую функцию
+            var (bestFitName, theoreticalTimes) = FindBestFit(sizes, times);
+
+            if (theoreticalTimes != null)
+            {
+                // Добавляем теоретическую кривую на график
+                var theoreticalSeries = new LineSeries
+                {
+                    Title = $"Аппроксимация: {bestFitName}",
+                    LineStyle = LineStyle.Dash,
+                    Color = OxyColors.Red
+                };
+
+                for (int i = 0; i < sizes.Length; i++)
+                {
+                    theoreticalSeries.Points.Add(new DataPoint(sizes[i], theoreticalTimes[i]));
+                }
+
+                plotModel.Series.Add(theoreticalSeries);
+            }
+            else
+            {
+                MessageBox.Show("Не удалось найти подходящую аппроксимацию.");
+            }
+
+            // Настройка осей
             plotModel.Axes.Add(new LinearAxis
             {
                 Position = AxisPosition.Left,
-                Title = "Время (миллисекунды)",  // Изменяем заголовок оси
-                StringFormat = "F2"  // Формат для вывода времени с двумя знаками после запятой
+                Title = "Время (миллисекунды)",
+                Minimum = 0,
+                Maximum = times.Max() * 1.1
             });
 
-            // Настройка оси X
             plotModel.Axes.Add(new LinearAxis
             {
                 Position = AxisPosition.Bottom,
                 Title = "Размерность вектора (n)",
-                Minimum = 1,
-                Maximum = 2000,
-                MajorStep = 100,
-                MinorStep = 10
+                Minimum = sizes.Min(),
+                Maximum = sizes.Max()
             });
+
+            // Добавляем легенду
+            plotModel.IsLegendVisible = true;
 
             // Устанавливаем модель для PlotView
             PlotView.Model = plotModel;
         }
+
+
+
+        private (string bestFitName, double[] theoreticalTimes) FindBestFit(int[] sizes, double[] times)
+        {
+            var complexityFunctions = new List<(string Name, Func<double, double[], double> Function, double[] InitialGuess)>
+    {
+        ("O(1)", (n, p) => p[0], new double[] { times.Average() }),
+        ("O(log n)", (n, p) => p[0] * Math.Log(n), new double[] { 1 }),
+        ("O(n)", (n, p) => p[0] * n, new double[] { times.Average() / sizes.Average() }),
+        ("O(n log n)", (n, p) => p[0] * n * Math.Log(n), new double[] { 1e-6 }),
+        ("O(n^2)", (n, p) => p[0] * n * n, new double[] { 1e-6 }),
+        ("O(n^3)", (n, p) => p[0] * n * n * n, new double[] { 1e-9 }),
+        ("O(2^n)", (n, p) => p[0] * Math.Pow(2, n), new double[] { 1e-9 })
+    };
+
+            double bestError = double.PositiveInfinity;
+            string bestFitName = null;
+            double[] bestTheoreticalTimes = null;
+
+            double[] nValues = sizes.Select(n => (double)n).ToArray();
+            double[] timeValues = times.ToArray();
+
+            foreach (var (Name, Function, InitialGuess) in complexityFunctions)
+            {
+                try
+                {
+                    // Создаем функцию ошибки
+                    Func<double[], double> errorFunction = (parameters) =>
+                    {
+                        double error = 0;
+                        for (int i = 0; i < nValues.Length; i++)
+                        {
+                            double modelValue = Function(nValues[i], parameters);
+                            double diff = modelValue - timeValues[i];
+                            error += diff * diff;
+                        }
+                        return error;
+                    };
+
+                    // Создаем оптимизатор
+                    var optimizer = new NelderMead(numberOfVariables: InitialGuess.Length)
+                    {
+                        Function = errorFunction,
+                        Solution = InitialGuess
+                    };
+
+                    bool success = optimizer.Minimize();
+
+                    if (success)
+                    {
+                        double[] fittedParameters = optimizer.Solution;
+                        double[] yFitted = nValues.Select(n => Function(n, fittedParameters)).ToArray();
+
+                        // Вычисляем среднеквадратичную ошибку
+                        double mse = yFitted.Zip(timeValues, (fitted, actual) => Math.Pow(fitted - actual, 2)).Average();
+
+                        if (mse < bestError)
+                        {
+                            bestError = mse;
+                            bestFitName = Name;
+                            bestTheoreticalTimes = yFitted;
+                        }
+                    }
+                }
+                catch
+                {
+                    // Игнорируем ошибки для неподходящих функций
+                    continue;
+                }
+            }
+
+            return (bestFitName, bestTheoreticalTimes);
+
+        }
+
     }
 }

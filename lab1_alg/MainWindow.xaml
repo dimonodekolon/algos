@@ -10,10 +10,10 @@
             <ComboBoxItem Content="Произведение элементов" />
             <ComboBoxItem Content="Полином (наивный)" />
             <ComboBoxItem Content="Полином (Горнер)" />
-            <ComboBoxItem Content="Bubble Sort" />
-            <ComboBoxItem Content="Insertion Sort" />
+            <ComboBoxItem Content="Bubble Sort" 
             <ComboBoxItem Content="Quick Sort" />
             <ComboBoxItem Content="TimSort" />
+            <ComboBoxItem Content="Insertion Sort" />
             <ComboBoxItem Content="ShellSort" />
             <ComboBoxItem Content="Matrix Multiplication" />
         </ComboBox>

@@ -63,3 +63,17 @@ C:\Users\danil\algosDIMASIK\lab1_alg\obj\Debug\lab1_alg.pdb
 C:\Users\danil\algosDIMASIK\lab1_alg\obj\Debug\MainWindow.g.cs
 C:\Users\danil\algosDIMASIK\lab1_alg\obj\Debug\App.g.cs
 C:\Users\danil\algosDIMASIK\lab1_alg\obj\Debug\MainWindow.baml
+C:\Users\danil\algosDIMASIK\lab1_alg\bin\Debug\MathNet.Numerics.dll
+C:\Users\danil\algosDIMASIK\lab1_alg\bin\Debug\System.ValueTuple.dll
+C:\Users\danil\algosDIMASIK\lab1_alg\bin\Debug\MathNet.Numerics.xml
+C:\Users\danil\algosDIMASIK\lab1_alg\bin\Debug\System.ValueTuple.xml
+C:\Users\danil\algosDIMASIK\lab1_alg\bin\Debug\Accord.dll.config
+C:\Users\danil\algosDIMASIK\lab1_alg\bin\Debug\Accord.dll
+C:\Users\danil\algosDIMASIK\lab1_alg\bin\Debug\Accord.Math.Core.dll
+C:\Users\danil\algosDIMASIK\lab1_alg\bin\Debug\Accord.Math.dll
+C:\Users\danil\algosDIMASIK\lab1_alg\bin\Debug\Accord.Statistics.dll
+C:\Users\danil\algosDIMASIK\lab1_alg\bin\Debug\Accord.xml
+C:\Users\danil\algosDIMASIK\lab1_alg\bin\Debug\Accord.Math.xml
+C:\Users\danil\algosDIMASIK\lab1_alg\bin\Debug\Accord.Math.Core.xml
+C:\Users\danil\algosDIMASIK\lab1_alg\bin\Debug\Accord.Statistics.xml
+C:\Users\danil\algosDIMASIK\lab1_alg\obj\Debug\lab1_alg_Content.g.cs
