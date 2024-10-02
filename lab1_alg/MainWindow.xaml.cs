@@ -70,10 +70,15 @@ namespace lab1_alg
                 step = 50;       // Увеличиваем шаг для получения приемлемых размеров // 
             
             }
+            /*else if (algorithm.Contains("степень"))
+            {
+                desiredMaxN = 2000;
+                step = 1;
+            }*/
             else
             {
                 desiredMaxN = 2000;
-                step = 20;
+                step = 10;
             }
 
             iterations = (desiredMaxN / step) + 1;
