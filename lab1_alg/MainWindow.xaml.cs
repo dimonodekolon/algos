@@ -77,12 +77,12 @@ namespace lab1_alg
             }*/
             else
             {
-                desiredMaxN = 2000;
-                step = 10;
+                desiredMaxN = 5000;
+                step = 100;
             }
 
             iterations = (desiredMaxN / step) + 1;
-
+            double[] steps = new double[iterations];
             int[] sizes = new int[iterations];
             double[] times = new double[iterations];
             for (int i = 0; i < iterations; i++)
@@ -90,7 +90,8 @@ namespace lab1_alg
                 int n = i == 0 ? 1 : (i - 1) * step + step;
                 sizes[i] = n;  // Размерность вектора
                 double totalTime = 0;
-                int number = 5;
+                int totalSteps = 0;
+                int number = 2;
                 int degree = i == 0 ? 1 : i * 10;
 
                 for (int r = 0; r < runs; r++)
@@ -150,19 +151,21 @@ namespace lab1_alg
                                 MatrixMultiplicator.MatrixMultiplication(A, B);
                                 break;
                             case "Простое возведение в степень":
-                                SimpleDegree.Pow(number, degree);
+                                MathPow.Pow(number, degree);
                                 break;
                             case "Рекурсивное возведение в степень":
-                                RecDegree.RecPow(number, degree);
+                                MathPow.RecPow(number, degree);
                                 break;
                             case "Быстрое возведение в степень":
-                                QuickDegree.QuickPow(number, degree);
+                                MathPow.QuickPow(number, degree);
                                 break;
                             case "Быстрое возведение в степень 2":
-                                QuickDegree.QuickPow2(number, degree);
+                                MathPow.QuickPow2(number, degree);
                                 break;
-                        }
+                        }  
                         stopwatch.Stop();
+                        totalSteps += MathPow.count;
+                        MathPow.count = 0;
                         totalTime += stopwatch.Elapsed.TotalMilliseconds; // В миллисекундах
                     }
                     catch (Exception ex)
@@ -179,9 +182,10 @@ namespace lab1_alg
                     Debug.WriteLine($"Завершена итерация {i + 1}/{iterations} для n = {n}");
 
                 }
+                steps[i] = totalSteps / runs;
                 times[i] = totalTime / runs;
             }
-
+            if (algorithm.Contains("степень")) return (sizes, steps);
             return (sizes, times);
         }
 
@@ -230,17 +234,17 @@ namespace lab1_alg
             }
 
             // Настройка осей
-            plotModel.Axes.Add(new LinearAxis
-            {
-                Position = AxisPosition.Left,
-                Title = "Время (миллисекунды)",
-                Minimum = 0,
-                Maximum = times.Max() * 1.1
-            });
 
             // Настройка оси X
             if (algorithmName.Contains("степень"))
             {
+                plotModel.Axes.Add(new LinearAxis
+                {
+                    Position = AxisPosition.Left,
+                    Title = "Шаги",
+                    Minimum = sizes.Min(),
+                    Maximum = sizes.Max()
+                }) ;
                 plotModel.Axes.Add(new LinearAxis
                 {
                     Position = AxisPosition.Bottom,
@@ -251,6 +255,13 @@ namespace lab1_alg
             }
             else
             {
+                plotModel.Axes.Add(new LinearAxis
+                {
+                    Position = AxisPosition.Left,
+                    Title = "Время (миллисекунды)",
+                    Minimum = 0,
+                    Maximum = times.Max() * 1.1
+                });
                 plotModel.Axes.Add(new LinearAxis
                 {
                     Position = AxisPosition.Bottom,
