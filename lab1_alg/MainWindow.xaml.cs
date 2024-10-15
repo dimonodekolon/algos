@@ -64,21 +64,73 @@ namespace lab1_alg
             int iterations;
             int step;
 
-            if (algorithm == "Matrix Multiplication")
+            switch (algorithm)
             {
-                desiredMaxN = 500;
-                step = 50;       // Увеличиваем шаг для получения приемлемых размеров // 
-            
-            }
-            /*else if (algorithm.Contains("степень"))
-            {
-                desiredMaxN = 2000;
-                step = 1;
-            }*/
-            else
-            {
-                desiredMaxN = 5000;
-                step = 100;
+                case "Функция константы":
+                    desiredMaxN = 50000;
+                    step = 50;
+                    break;
+                case "Сумма элементов":
+                    desiredMaxN = 50000;
+                    step = 50;
+                    break;
+                case "Произведение элементов":
+                    desiredMaxN = 50000;
+                    step = 50;
+                    break;
+                case "Полином (наивный)":
+                    desiredMaxN = 50000;
+                    step = 50;
+                    break;
+                case "Полином (Горнер)":
+                    desiredMaxN = 50000;
+                    step = 50;
+                    break;
+                case "Bubble Sort":
+                    desiredMaxN = 5000;
+                    step = 50;
+                    break;
+                case "Quick Sort":
+                    desiredMaxN = 75000;
+                    step = 100;
+                    break;
+                case "Insertion Sort":
+                    desiredMaxN = 10000;
+                    step = 25;
+                    break;
+                case "Coctail Sort":
+                    desiredMaxN = 10000;
+                    step = 50;
+                    break;
+                case "TimSort":
+                    desiredMaxN = 50000;
+                    step = 50;
+                    break;
+                case "ShellSort":
+                    desiredMaxN = 20000;
+                    step = 25;
+                    break;
+                case "Matrix Multiplication":
+                    desiredMaxN = 1500;
+                    step = 50;
+                    break;
+                case "Простое возведение в степень":
+                    desiredMaxN = 50000;
+                    step = 100;
+                    break;
+                case "Рекурсивное возведение в степень":
+                    desiredMaxN = 50000;
+                    step = 100;
+                    break;
+                case "Быстрое возведение в степень":
+                    desiredMaxN = 50000;
+                    step = 100;
+                    break;
+                case "Быстрое возведение в степень 2":
+                    desiredMaxN = 50000;
+                    step = 100;
+                    break;
+                default: throw new ArgumentException();
             }
 
             iterations = (desiredMaxN / step) + 1;
