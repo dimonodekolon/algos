@@ -1,5 +1,4 @@
-﻿using OxyPlot.Axes;
-using OxyPlot.Series;
+﻿using OxyPlot.Series;
 using OxyPlot;
 using System;
 using System.Collections.Generic;
@@ -22,6 +21,7 @@ using src.Algorithms;
 using lab1_alg.MatrixOperations;
 using lab1_alg.src;
 using Accord.Math.Optimization;
+using OxyPlot.Axes;
 
 namespace lab1_alg
 {
@@ -134,13 +134,17 @@ namespace lab1_alg
             }
 
             iterations = (desiredMaxN / step) + 1;
-            double[] steps = new double[iterations];
+            double[] steps = null;
+            if (algorithm.Contains("степень"))
+            {
+                steps = new double[iterations];
+            }
             int[] sizes = new int[iterations];
             double[] times = new double[iterations];
             for (int i = 0; i < iterations; i++)
             {
-                int n = i == 0 ? 1 : (i - 1) * step + step;
-                sizes[i] = n;  // Размерность вектора
+                int n = i * step;
+                sizes[i] = n == 0 ? 1 : n;  // Размерность вектора
                 double totalTime = 0;
                 int totalSteps = 0;
                 int number = 2;
@@ -150,15 +154,15 @@ namespace lab1_alg
                 {
                     try
                     {
-                        double[] v = VectorGenerator.GenerateRandomVector(n);
+                        double[] v = VectorGenerator.GenerateRandomVector(sizes[i]);
 
                         // Генерация данных вне измерения времени
                         double[,] A = null;
                         double[,] B = null;
                         if (algorithm == "Matrix Multiplication")
                         {
-                            A = MatrixGenerator.GenerateRandomMatrix(n, n);
-                            B = MatrixGenerator.GenerateRandomMatrix(n, n);
+                            A = MatrixGenerator.GenerateRandomMatrix(sizes[i], sizes[i]);
+                            B = MatrixGenerator.GenerateRandomMatrix(sizes[i], sizes[i]);
                         }
 
                         Stopwatch stopwatch = new Stopwatch();
@@ -214,7 +218,7 @@ namespace lab1_alg
                             case "Быстрое возведение в степень 2":
                                 MathPow.QuickPow2(number, degree);
                                 break;
-                        }  
+                        }
                         stopwatch.Stop();
                         totalSteps += MathPow.count;
                         MathPow.count = 0;
@@ -226,16 +230,14 @@ namespace lab1_alg
                         times[i] = double.NaN;
                         break;
                     }
-                    if (!double.IsNaN(times[i]))
-                    {
-                        times[i] = totalTime / runs;
-                    }
-
-                    Debug.WriteLine($"Завершена итерация {i + 1}/{iterations} для n = {n}");
-
                 }
-                steps[i] = totalSteps / runs;
+                if (steps != null)
+                {
+                    steps[i] = totalSteps / runs;
+                }
                 times[i] = totalTime / runs;
+
+                Debug.WriteLine($"Завершена итерация {i + 1}/{iterations} для n = {sizes[i]}");
             }
             if (algorithm.Contains("степень")) return (sizes, steps);
             return (sizes, times);
@@ -294,9 +296,9 @@ namespace lab1_alg
                 {
                     Position = AxisPosition.Left,
                     Title = "Шаги",
-                    Minimum = sizes.Min(),
-                    Maximum = sizes.Max()
-                }) ;
+                    Minimum = 0,
+                    Maximum = times.Max() * 1.1
+                });
                 plotModel.Axes.Add(new LinearAxis
                 {
                     Position = AxisPosition.Bottom,
@@ -328,8 +330,6 @@ namespace lab1_alg
             // Устанавливаем модель для PlotView
             PlotView.Model = plotModel;
         }
-
-
 
         private (string bestFitName, double[] theoreticalTimes) FindBestFit(int[] sizes, double[] times)
         {
@@ -401,7 +401,6 @@ namespace lab1_alg
             }
 
             return (bestFitName, bestTheoreticalTimes);
-
         }
 
     }

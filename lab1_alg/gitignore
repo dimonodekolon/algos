@@ -3,6 +3,23 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# Игнорирование файлов конфигурации и сборки
+.vs/
+*.suo
+*.user
+*.json
+
+# Игнорирование выходных директорий сборки
+bin/
+obj/
+
+# Игнорирование файлов проекта
+*.cache
+*.pdb
+*.baml
+*.g.*
+
+
 # User-specific files
 *.rsuser
 *.suo
